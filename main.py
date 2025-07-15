@@ -14,18 +14,16 @@ print(colored)
 token = input(Center.XCenter((f"{C.LIGHTBLACK_EX}Insert your token here..{C.RESET} ")))
 prefix = ";"
 
+headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101 Firefox/102.0', 'Content-Type': 'application/json', 'X-Context-Properties': 'eyJsb2NhdGlvbiI6IkpvaW4gR3VpbGQiLCJsb2NhdGlvbl9ndWlsZF9pZCI6Ijk4OTkxOTY0NTY4MTE4ODk1NCIsImxvY2F0aW9uX2NoYW5uZWxfaWQiOiI5OTAzMTc0ODgxNzg4NjgyMjQiLCJsb2NhdGlvbl9jaGFubmVsX3R5cGUiOjB9', 'Authorization': token, 'X-Super-Properties': 'eyJvcyI6IldpbmRvd3MiLCJicm93c2VyIjoiRmlyZWZveCIsImRldmljZSI6IiIsInN5c3RlbV9sb2NhbGUiOiJmciIsImJyb3dzZXJfdXNlcl9hZ2VudCI6Ik1vemlsbGEvNS4wIChXaW5kb3dzIE5UIDEwLjA7IFdpbjY0OyB4NjQ7IHJ2OjEwMi4wKSBHZWNrby8yMDEwMDEwMSBGaXJlZm94LzEwMi4wIiwiYnJvd3Nlcl92ZXJzaW9uIjoiMTAyLjAiLCJvc192ZXJzaW9uIjoiMTAiLCJyZWZlcnJlciI6IiIsInJlZmVycmluZ19kb21haW4iOiIiLCJyZWZlcnJlcl9jdXJyZW50IjoiIiwicmVmZXJyaW5nX2RvbWFpbl9jdXJyZW50IjoiIiwicmVsZWFzZV9jaGFubmVsIjoic3RhYmxlIiwiY2xpZW50X2J1aWxkX251bWJlciI6MTM2MjQwLCJjbGllbnRfZXZlbnRfc291cmNlIjpudWxsfQ==', 'X-Discord-Locale': 'en-US', 'Origin': 'https://discord.com', 'Connection': 'keep-alive', 'Referer': 'https://discord.com', 'Cookie': '__dcfduid=21183630021f11edb7e89582009dfd5e; __sdcfduid=21183631021f11edb7e89582009dfd5ee4936758ec8c8a248427f80a1732a58e4e71502891b76ca0584dc6fafa653638; locale=en-US',}
 polaroid = commands.Bot(command_prefix=prefix, intents=discord.Intents.all(), self_bot=1); chroma = polaroid; nazareth = chroma
+polaroid2 = httpx.Client(); chroma2 = polaroid2; nazareth2 = chroma2
 
 @polaroid.event
 async def on_ready():
+    os.system('cls' if os.name == 'nt' else 'clear')
     print(colored)
-    print(f"(+) Username - {C.LIGHTBLACK_EX}{polaroid.user.name}{C.RESET} [{C.LIGHTBLACK_EX}{polaroid.user.id}{C.RESET}]")
-    print(f"{C.LIGHTBLACK_EX}chromasec{C.RESET} or {C.LIGHTBLACK_EX}yugokash{C.RESET} on discord for support")
-
-@polaroid.event
-async def on_message(message):
-    if message.content.startswith(prefix):
-        await message.delete()
+    print(f"                                                                      (+) Username - {C.LIGHTBLACK_EX}{polaroid.user.name}{C.RESET} [{C.LIGHTBLACK_EX}{polaroid.user.id}{C.RESET}]")
+    print(f"                                                                      {C.LIGHTBLACK_EX}chromasec{C.RESET} or {C.LIGHTBLACK_EX}yugokash{C.RESET} on discord for support")
 
 @nazareth.command(aliases=["dmsave", "ds"])
 async def dmscrape(ctx):
@@ -42,5 +40,14 @@ async def memscrape(ctx):
     users = list(users)
     for user in users:
         print(Center.XCenter(user))
+
+# do note that discord heavily ratelimits gc endpoints! so do stick to 1-10 gcs <3
+@nazareth.command()
+async def gcspam(ctx, num: int, target: discord.User, *, msg: str):
+    penis = {"recipients": [str(nazareth.user.id), str(target.id)]}
+    penis2 = {"name": msg}
+    for i in range(num):
+        pussy = nazareth2.post("https://discord.com/api/v9/users/@me/channels", headers=headers, json=penis)
+        if pussy.status_code == 200: jizz = pussy.json(); jizz2 = jizz["id"]; nazareth2.patch(f"https://discord.com/api/v9/channels/{jizz2}", headers=headers, json=penis2)
 
 polaroid.run(token, bot=0)
