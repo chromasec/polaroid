@@ -1,0 +1,7 @@
+discord.py==1.7.3
+colorama
+asyncio
+httpx
+tasksio
+nest_asyncio
+rule34Py
