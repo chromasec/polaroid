@@ -15,22 +15,36 @@ __  /_/ / /_/ /  / / /_/ /_  /   / /_/ /  / / /_/ /
 _  .___/\____//_/  \__,_/ /_/    \____//_/  \__,_/
 /_/                                                  """); colored = Colorate.Vertical(Colors.white_to_black, ascii)
 
+helpmenu = (""" ```𝐏𝐎𝐋𝐀𝐑𝐎𝐈𝐃 | 𝐓𝐨𝐨𝐥-𝐁𝐨𝐱.
+♅ help - show this menu
+♅ quickpurge [amout of messages] [delay] - quickly purges messages
+♅ advancedpurge [amout of messages] [delay] - purges messages but long to start
+♅ spam [message] [count] [delay] - spams a message
+♅ dmscrape - scrapes direct messsages in the channel
+♅ cat - sends a random cat picture ```
+""")
+
 print(colored)
 token = input(Center.XCenter((f"{C.LIGHTBLACK_EX}Insert your token here..{C.RESET} ")))
 prefix = ";"
 
-polaroid = commands.Bot(command_prefix=prefix, intents=discord.Intents.all(), self_bot=1); chroma = polaroid; nazareth = chroma
+polaroid = commands.Bot(command_prefix=prefix, intents=discord.Intents.all(), self_bot=1, help_command=None); chroma = polaroid; nazareth = chroma
 
 @polaroid.event
 async def on_ready():
     print(colored)
     print(f"(+) Username - {C.LIGHTBLACK_EX}{polaroid.user.name}{C.RESET} [{C.LIGHTBLACK_EX}{polaroid.user.id}{C.RESET}]")
     print(f"{C.LIGHTBLACK_EX}chromasec{C.RESET} or {C.LIGHTBLACK_EX}yugokash{C.RESET} on discord for support")
+    print(f"say {C.LIGHTBLACK_EX}/help{C.RESET} for commands")
 
 @polaroid.event
 async def on_message(message):
     if message.content.startswith(prefix):
         await message.delete()
+
+@chroma.command(name="help")
+async def help(ctx, page: int):
+    ctx.send(helpmenu)
 
 @chroma.command(name="quickpurge")
 async def quickpurge(ctx, amount: int, delay: float):
@@ -54,8 +68,8 @@ async def spam(ctx, message: str, count: int, delay: float): # ugly way to spam,
 
 @nazareth.command(aliases=["dmsave", "ds"])
 async def dmscrape(ctx):
-    async for message in ctx.channel.history(limit=None, oldest_first=True): 
-        print(f"[{C.LIGHTBLACK_EX}{message.author.name}{C.RESET}] {C.LIGHTBLACK_EX}{message.content}{C.RESET}"); 
+    async for message in ctx.channel.history(limit=None, oldest_first=True):
+        print(f"[{C.LIGHTBLACK_EX}{message.author.name}{C.RESET}] {C.LIGHTBLACK_EX}{message.content}{C.RESET}");
         if message.attachments:
             print(Center.XCenter(f"[{C.LIGHTBLACK_EX}{message.author.name}{C.RESET}] {C.LIGHTBLACK_EX}{message.attachments[0].url}{C.RESET}"))
 
