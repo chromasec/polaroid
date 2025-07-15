@@ -47,7 +47,6 @@ help2 = f"""
 [1;37m{prefix}[1;34serverinfo
 [1;37m{prefix}[1;34userinfo [mention]
 [1;37m{prefix}[1;34avatar [mention]
-=======
 [1;37m{prefix}[1;34mhypesquad [house]
 ```"""
 help3 = f"""
@@ -66,7 +65,6 @@ help4 = f"""
 [1;37m{prefix}[1;33mgcspam [number] [@target] [name]
 [1;37m{prefix}[1;33mlagchat [number]
 [1;37m{prefix}[1;33mnuke
-=======
 [1;37m{prefix}[1;33mdelwh [webhook]
 [1;37m{prefix}[1;33mwhspam [webhook] [number] [message]
 ```"""
