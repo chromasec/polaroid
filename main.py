@@ -23,6 +23,7 @@ async def on_message(message):
 
 @polaroid.command(name="purge")
 async def purge(ctx, amount: int):
-    await ctx.channel.purge(limit=amount)
+    if ctx.author == polaroid.user:
+        await ctx.channel.purge(limit=amount)
 
 polaroid.run(token, bot=0)
