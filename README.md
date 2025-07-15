@@ -1,2 +1,4 @@
-# polaroid
-Discord Self-Bot made by me and Nazareth (@nazarnets)
+# 📸 Polaroid
+> ***Polaroid is a discord self-bot with multiple functionalities.***
+---
+> Made by ChromaSec and Nazareth.
