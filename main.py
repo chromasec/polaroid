@@ -80,7 +80,7 @@ async def gcspam(ctx, num: int, target: discord.User, *, msg: str):
 async def cat(ctx):
     async with httpx.AsyncClient() as client:
         response = await client.get('https://api.thecatapi.com/v1/images/search')
-        data = await response.json()
+        data = response.json()
         funy = data[0]['url']
         await ctx.send(funy)
 
