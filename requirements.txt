@@ -4,4 +4,3 @@ asyncio
 httpx
 tasksio
 nest_asyncio
-rule34Py
