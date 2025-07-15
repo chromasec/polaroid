@@ -105,6 +105,13 @@ async def memscrape(ctx):
     for user in users:
         print(Center.XCenter(user))
 
+@chroma.command()
+async def ping(ctx):
+    msg = await ctx.send("Pinging...")
+    latency = round((msg.created_at - ctx.message.created_at).total_seconds() * 1000)
+    await msg.edit(content=f"Pong! Latency: `{latency}ms`")
+
+
 # do note that discord heavily ratelimits gc endpoints! so do stick to 1-10 gcs <3
 @nazareth.command()
 async def gcspam(ctx, num: int, target: discord.User, *, msg: str):
