@@ -3,6 +3,14 @@ import discord; from discord.ext import commands; import random; from itertools 
 import asyncio; import httpx; from tasksio import TaskPool; import string; import nest_asyncio; from pystyle import Colorate, Colors, Center
 nest_asyncio.apply()
 
+# ascii generator made by kristan p thanks kristan!
+def asciigen(length):
+    asc = ""
+    for x in range(int(length)):
+        num = random.randrange(13000)
+        asc = asc + chr(num)
+    return asc
+
 ascii = Center.XCenter(r"""              ______                   ______________
 _________________  /_____ ________________(_)_____  /
 ___  __ \  __ \_  /_  __ `/_  ___/  __ \_  /_  __  /
@@ -22,14 +30,14 @@ polaroid2 = httpx.Client(); chroma2 = polaroid2; nazareth2 = chroma2
 async def on_ready():
     os.system('cls' if os.name == 'nt' else 'clear')
     print(colored)
-    print(f"                                                                      (+) Username - {C.LIGHTBLACK_EX}{polaroid.user.name}{C.RESET} [{C.LIGHTBLACK_EX}{polaroid.user.id}{C.RESET}]")
-    print(f"                                                                      {C.LIGHTBLACK_EX}chromasec{C.RESET} or {C.LIGHTBLACK_EX}yugokash{C.RESET} on discord for support")
+    print(f"                                    (+) Username - {C.LIGHTBLACK_EX}{polaroid.user.name}{C.RESET} [{C.LIGHTBLACK_EX}{polaroid.user.id}{C.RESET}]")
+    print(f"                                    {C.LIGHTBLACK_EX}chromasec{C.RESET} or {C.LIGHTBLACK_EX}yugokash{C.RESET} on discord for support")
 
 @polaroid.event
 async def on_message(message):
     if message.content.startswith(prefix):
-        await polaroid.process_commands(message)  # we need ts to keep cmds working apparently so yea
         await message.delete()
+        await polaroid.process_commands(message)
 
 @chroma.command(name="quickpurge")
 async def quickpurge(ctx, amount: int, delay: float):
@@ -46,8 +54,8 @@ async def advancedpurge(ctx, amount: int, delay: float):
             await asyncio.sleep(delay)
 
 @chroma.command(name="spam")
-async def spam(ctx, message: str, count: int, delay: float): # ugly way to spam, but will do the job...
-    for _ in range(count):
+async def spam(ctx, delay: float, count: int, *, message: str):
+    for i in range(count):
         await ctx.send(message)
         await asyncio.sleep(delay)
 
@@ -83,5 +91,13 @@ async def cat(ctx):
         data = response.json()
         funy = data[0]['url']
         await ctx.send(funy)
+
+@nazareth.command()
+async def lagchat(ctx, num: int):
+    penis = {"content": asciigen(1000)}
+    async def chatlag():
+        async with httpx.AsyncClient() as nazareth3:
+            await nazareth3.post(f"https://discord.com/api/v9/channels/{ctx.channel.id}/messages", headers=headers, json=penis)
+    await asyncio.gather(*[chatlag() for i in range(num)])
 
 polaroid.run(token, bot=0)
