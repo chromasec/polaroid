@@ -89,6 +89,11 @@ async def spam(ctx, delay: float, count: int, *, message: str):
         await ctx.send(message)
         await asyncio.sleep(delay)
 
+@chroma.command()
+async def stop(ctx):
+    await print("shut down has been requested! goodbye world.....") 
+    await chroma.close()
+
 @nazareth.command(aliases=["dmsave", "ds"])
 async def dmscrape(ctx):
     async for message in ctx.channel.history(limit=None, oldest_first=True): 
