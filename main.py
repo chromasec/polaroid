@@ -23,8 +23,40 @@ token = input(Center.XCenter((f"{C.LIGHTBLACK_EX}Insert your token here..{C.RESE
 prefix = ";"
 
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101 Firefox/102.0', 'Content-Type': 'application/json', 'X-Context-Properties': 'eyJsb2NhdGlvbiI6IkpvaW4gR3VpbGQiLCJsb2NhdGlvbl9ndWlsZF9pZCI6Ijk4OTkxOTY0NTY4MTE4ODk1NCIsImxvY2F0aW9uX2NoYW5uZWxfaWQiOiI5OTAzMTc0ODgxNzg4NjgyMjQiLCJsb2NhdGlvbl9jaGFubmVsX3R5cGUiOjB9', 'Authorization': token, 'X-Super-Properties': 'eyJvcyI6IldpbmRvd3MiLCJicm93c2VyIjoiRmlyZWZveCIsImRldmljZSI6IiIsInN5c3RlbV9sb2NhbGUiOiJmciIsImJyb3dzZXJfdXNlcl9hZ2VudCI6Ik1vemlsbGEvNS4wIChXaW5kb3dzIE5UIDEwLjA7IFdpbjY0OyB4NjQ7IHJ2OjEwMi4wKSBHZWNrby8yMDEwMDEwMSBGaXJlZm94LzEwMi4wIiwiYnJvd3Nlcl92ZXJzaW9uIjoiMTAyLjAiLCJvc192ZXJzaW9uIjoiMTAiLCJyZWZlcnJlciI6IiIsInJlZmVycmluZ19kb21haW4iOiIiLCJyZWZlcnJlcl9jdXJyZW50IjoiIiwicmVmZXJyaW5nX2RvbWFpbl9jdXJyZW50IjoiIiwicmVsZWFzZV9jaGFubmVsIjoic3RhYmxlIiwiY2xpZW50X2J1aWxkX251bWJlciI6MTM2MjQwLCJjbGllbnRfZXZlbnRfc291cmNlIjpudWxsfQ==', 'X-Discord-Locale': 'en-US', 'Origin': 'https://discord.com', 'Connection': 'keep-alive', 'Referer': 'https://discord.com', 'Cookie': '__dcfduid=21183630021f11edb7e89582009dfd5e; __sdcfduid=21183631021f11edb7e89582009dfd5ee4936758ec8c8a248427f80a1732a58e4e71502891b76ca0584dc6fafa653638; locale=en-US',}
-polaroid = commands.Bot(command_prefix=prefix, intents=discord.Intents.all(), self_bot=1); chroma = polaroid; nazareth = chroma
+polaroid = commands.Bot(command_prefix=prefix, intents=discord.Intents.all(), self_bot=1, help_command=None); chroma = polaroid; nazareth = chroma
 polaroid2 = httpx.Client(); chroma2 = polaroid2; nazareth2 = chroma2
+
+help1 = f"""
+```ansi
+[1;37m[ [1;36mPolaroid SB [1;37m| [1;36mCommands [1;37m]
+[1;37m{prefix}[1;34mutilityc [number (not required)]
+[1;37m{prefix}[1;35mfunc [number (not required)]
+[1;37m{prefix}[1;33mraidc [number (not required)]
+```"""
+help2 = f"""
+```ansi
+[1;37m[ [1;34mPolaroid SB [1;37m| [1;34mUtility Commands [1;37m]
+[1;37m{prefix}[1;34mpurge/clear/clean [number (not required)]
+[1;37m{prefix}[1;34mdmscrape/dmsave/ds
+[1;37m{prefix}[1;34mmemscrape
+```"""
+help3 = f"""
+```ansi
+[1;37m[ [1;35mPolaroid SB [1;37m| [1;35mFun Commands [1;37m]
+[1;37m{prefix}[1;35mgif [query]
+[1;37m{prefix}[1;35mnsfw
+[1;37m{prefix}[1;35mcat
+[1;37m{prefix}[1;35m8ball [question]
+[1;37m{prefix}[1;35mroulette
+```"""
+help4 = f"""
+```ansi
+[1;37m[ [1;33mPolaroid SB [1;37m| [1;33mRaid Commands [1;37m]
+[1;37m{prefix}[1;33mspam [delay] [number] [message]
+[1;37m{prefix}[1;33mgcspam [number] [@target] [name]
+[1;37m{prefix}[1;33mlagchat [number]
+[1;37m{prefix}[1;33mnuke
+```"""
 
 @polaroid.event
 async def on_ready():
@@ -39,19 +71,17 @@ async def on_message(message):
         await message.delete()
         await polaroid.process_commands(message)
 
-@chroma.command(name="quickpurge")
-async def quickpurge(ctx, amount: int, delay: float):
-    if ctx.author == polaroid.user:
-        await ctx.channel.purge(limit=amount, check=lambda m: m.author == polaroid.user, bulk=True, delay=delay)
-
-@chroma.command(name="advancedpurge")
-async def advancedpurge(ctx, amount: int, delay: float):
-    if ctx.author == polaroid.user:
-        messages = await ctx.channel.history(limit=amount).flatten()
-        user_messages = [m for m in messages if m.author == polaroid.user]
-        for message in user_messages:
-            await message.delete()
-            await asyncio.sleep(delay)
+@nazareth.command(aliases=["clear", "clean"])
+async def purge(ctx, num: int = None):
+    await ctx.message.delete()
+    if num == None:
+        num = None
+    async for message in ctx.channel.history(limit=num):
+        if message.author == ctx.author:
+            try:
+                asyncio.create_task(message.delete())
+            except:
+                await asyncio.sleep(5)
 
 @chroma.command(name="spam") # this is an ugly way to spam, PLEASE HELP NAZ!!!!!!
 async def spam(ctx, delay: float, count: int, *, message: str):
@@ -111,5 +141,41 @@ async def nsfw(ctx):
     categories = ["waifu", "neko", "trap", "blowjob"]
     vagina = nazareth2.get(f"https://api.waifu.pics/nsfw/{random.choice(categories)}")
     penis = vagina.json(); sperm = penis["url"]; await ctx.send(sperm)
+
+@nazareth.command(name="8ball")
+async def _8ball(ctx, question: str):
+    responses = [
+    "Yes, definitely.","Without a doubt.", "Absolutely.",
+    "Signs point to yes.", "Most likely.", "Ask again later.",
+    "Cannot predict now.", "Better not tell you now.", "Don't count on it.",
+    "My sources say no.", "Very doubtful.", "Absolutely not."]; await ctx.reply(random.choice(responses))
+
+@nazareth.command()
+async def roulette(ctx, chamber: int):
+    bullet = random.randint(1, 6)
+    if chamber == bullet: await ctx.reply("*You pull the trigger, everything goes black. You died.*")
+    else: await ctx.reply("*You pull the trigger, nothing happens. You survived.*")
+
+@nazareth.command()
+async def help(ctx, time: int = None):
+    if time: await ctx.send(help1, delete_after=time)
+    else: await ctx.send(help1)
+
+@nazareth.command()
+async def utilityc(ctx, time: int = None):
+    if time: await ctx.send(help2, delete_after=time)
+    else: await ctx.send(help2)
+
+@nazareth.command()
+async def func(ctx, time: int = None):
+    if time: await ctx.send(help3, delete_after=time)
+    else: await ctx.send(help3)
+
+@nazareth.command()
+async def raidc(ctx, time: int = None):
+    if time: await ctx.send(help4, delete_after=time)
+    else: await ctx.send(help4)
+
+## NUKE SOON ##
 
 polaroid.run(token, bot=0)
