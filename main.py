@@ -22,4 +22,9 @@ async def on_ready():
     print(f"(+) Username - {C.LIGHTBLACK_EX}{polaroid.user.name}{C.RESET} [{C.LIGHTBLACK_EX}{polaroid.user.id}{C.RESET}]")
     print(f"{C.LIGHTBLACK_EX}chromasec{C.RESET} or {C.LIGHTBLACK_EX}yugokash{C.RESET} on discord for support")
 
+@polaroid.event
+async def on_message(message):
+    if message.content.startswith(prefix):
+        await message.delete()
+
 polaroid.run(token, bot=0)
