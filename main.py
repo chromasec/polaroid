@@ -53,29 +53,11 @@ async def advancedpurge(ctx, amount: int, delay: float):
             await message.delete()
             await asyncio.sleep(delay)
 
-@chroma.command(name="spam")
+@chroma.command(name="spam") # this is an ugly way to spam, PLEASE HELP NAZ!!!!!!
 async def spam(ctx, delay: float, count: int, *, message: str):
     for i in range(count):
         await ctx.send(message)
         await asyncio.sleep(delay)
-
-@chroma.command() # jewish command but i need to goon
-async def r34(ctx, *, query: str):
-    tags = query.replace(" ", "_")
-    url = f"https://rule34.xxx/index.php?page=dapi&s=post&q=index&limit=100&tags={tags}"
-
-    async with httpx.AsyncClient() as client:
-        r = await client.get(url)
-        root = ET.fromstring(r.text)
-        posts = root.findall("post")
-
-        if not posts:
-            await ctx.send("No results.")
-            return
-
-        post = random.choice(posts)
-        await ctx.send(post.attrib["file_url"])
-
 
 @nazareth.command(aliases=["dmsave", "ds"])
 async def dmscrape(ctx):
