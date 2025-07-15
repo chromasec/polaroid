@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-
-"""
-come with me alice, let me show you how deep the rabbit hole goes.
-"""
-
 import discord; from discord.ext import commands; import random; from itertools import cycle; from colorama import Fore as C; import os
 import asyncio; import httpx; from tasksio import TaskPool; import string; import nest_asyncio; from pystyle import Colorate, Colors, Center
 nest_asyncio.apply()
@@ -27,12 +22,8 @@ polaroid2 = httpx.Client(); chroma2 = polaroid2; nazareth2 = chroma2
 async def on_ready():
     os.system('cls' if os.name == 'nt' else 'clear')
     print(colored)
-
     print(f"                                                                      (+) Username - {C.LIGHTBLACK_EX}{polaroid.user.name}{C.RESET} [{C.LIGHTBLACK_EX}{polaroid.user.id}{C.RESET}]")
     print(f"                                                                      {C.LIGHTBLACK_EX}chromasec{C.RESET} or {C.LIGHTBLACK_EX}yugokash{C.RESET} on discord for support")
-
-    print(f"(+) Username - {C.LIGHTBLACK_EX}{polaroid.user.name}{C.RESET} [{C.LIGHTBLACK_EX}{polaroid.user.id}{C.RESET}]")
-    print(f"{C.LIGHTBLACK_EX}chromasec{C.RESET} or {C.LIGHTBLACK_EX}yugokash{C.RESET} on discord for support")
 
 @polaroid.event
 async def on_message(message):
@@ -40,9 +31,6 @@ async def on_message(message):
         await polaroid.process_commands(message)  # we need ts to keep cmds working apparently so yea
         await asyncio.sleep(3) 
         await message.delete()
-
-
-
 
 @chroma.command(name="quickpurge")
 async def quickpurge(ctx, amount: int, delay: float):
@@ -80,7 +68,6 @@ async def memscrape(ctx):
     for user in users:
         print(Center.XCenter(user))
 
-
 # do note that discord heavily ratelimits gc endpoints! so do stick to 1-10 gcs <3
 @nazareth.command()
 async def gcspam(ctx, num: int, target: discord.User, *, msg: str):
@@ -97,6 +84,5 @@ async def cat(ctx):
         data = await response.json()
         funy = data[0]['url']
         await ctx.send(funy)
-
 
 polaroid.run(token, bot=0)
