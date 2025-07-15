@@ -68,4 +68,12 @@ async def memscrape(ctx):
     for user in users:
         print(Center.XCenter(user))
 
+@chroma.command(name="cat")
+async def cat(ctx):
+    async with httpx.AsyncClient() as client:
+        response = await client.get('https://api.thecatapi.com/v1/images/search')
+        data = await response.json()
+        funy = data[0]['url']
+        await ctx.send(funy)
+
 polaroid.run(token, bot=0)
