@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+
+"""
+come with me, Alice, let me show you how deep the rabit-hole goes.
+"""
+
 import discord; from discord.ext import commands; import random; from itertools import cycle; from colorama import Fore as C; import os
 import asyncio; import httpx; from tasksio import TaskPool; import string; import nest_asyncio; from pystyle import Colorate, Colors, Center
 nest_asyncio.apply()
@@ -39,6 +44,10 @@ help2 = f"""
 [1;37m{prefix}[1;34mpurge/clear/clean [number (not required)]
 [1;37m{prefix}[1;34mdmscrape/dmsave/ds
 [1;37m{prefix}[1;34mmemscrape
+[1;37m{prefix}[1;34serverinfo
+[1;37m{prefix}[1;34userinfo [mention]
+[1;37m{prefix}[1;34avatar [mention]
+=======
 [1;37m{prefix}[1;34mhypesquad [house]
 ```"""
 help3 = f"""
@@ -57,6 +66,7 @@ help4 = f"""
 [1;37m{prefix}[1;33mgcspam [number] [@target] [name]
 [1;37m{prefix}[1;33mlagchat [number]
 [1;37m{prefix}[1;33mnuke
+=======
 [1;37m{prefix}[1;33mdelwh [webhook]
 [1;37m{prefix}[1;33mwhspam [webhook] [number] [message]
 ```"""
@@ -92,6 +102,11 @@ async def spam(ctx, delay: float, count: int, *, message: str):
         await ctx.send(message)
         await asyncio.sleep(delay)
 
+@chroma.command()
+async def stop(ctx):
+    await print("shut down has been requested! goodbye world.....") 
+    await chroma.close()
+
 @nazareth.command(aliases=["dmsave", "ds"])
 async def dmscrape(ctx):
     async for message in ctx.channel.history(limit=None, oldest_first=True): 
@@ -108,12 +123,21 @@ async def memscrape(ctx):
     for user in users:
         print(Center.XCenter(user))
 
+@chroma.command()
+async def ping(ctx):
+    msg = await ctx.send("Pinging...")
+    latency = round((msg.created_at - ctx.message.created_at).total_seconds() * 1000)
+    await msg.edit(content=f"Pong! Latency: `{latency}ms`")
+
+
 # do note that discord heavily ratelimits gc endpoints! so do stick to 1-10 gcs <3
 @nazareth.command()
 async def gcspam(ctx, num: int, target: discord.User, *, msg: str):
     penis = {"recipients": [str(nazareth.user.id), str(target.id)]}
     penis2 = {"name": msg}
     for i in range(num):
+        pussy = nazareth2.post("https://discord.com/api/v9/users/@me/channels", headers=headers, json=penis)
+        if pussy.status_code == 200: jizz = pussy.json(); jizz2 = jizz["id"]; nazareth2.patch(f"https://discord.com/api/v9/channels/{jizz2}", headers=headers, json=penis2)
         async with httpx.AsyncClient() as nazareth3:
             pussy = await nazareth3.post("https://discord.com/api/v9/users/@me/channels", headers=headers, json=penis)
             if pussy.status_code == 200: jizz = pussy.json(); jizz2 = jizz["id"]; await nazareth3.patch(f"https://discord.com/api/v9/channels/{jizz2}", headers=headers, json=penis2)
@@ -179,6 +203,46 @@ async def func(ctx, time: int = None):
 async def raidc(ctx, time: int = None):
     if time: await ctx.send(help4, delete_after=time)
     else: await ctx.send(help4)
+
+@chroma.command()
+async def serverinfo(ctx):
+    guild = ctx.guild
+    text_channels = len(guild.text_channels)
+    voice_channels = len(guild.voice_channels)
+    members = guild.member_count
+    owner = guild.owner
+    created = guild.created_at.strftime("%Y-%m-%d %H:%M:%S")
+
+    info = (
+        f"**Server Name:** {guild.name}\n"
+        f"**Server ID:** {guild.id}\n"
+        f"**Owner:** {owner}\n"
+        f"**Members:** {members}\n"
+        f"**Text Channels:** {text_channels}\n"
+        f"**Voice Channels:** {voice_channels}\n"
+        f"**Created On:** {created}"
+    )
+    await ctx.send(info)
+@chroma.command()
+async def userinfo(ctx, member: discord.Member = None):
+    member = member or ctx.author
+    joined = member.joined_at.strftime("%Y-%m-%d %H:%M:%S") if member.joined_at else "Unknown"
+    created = member.created_at.strftime("%Y-%m-%d %H:%M:%S")
+
+    info = (
+        f"**User:** {member} (ID: {member.id})\n"
+        f"**Display Name:** {member.display_name}\n"
+        f"**Account Created:** {created}\n"
+        f"**Joined Server:** {joined}\n"
+        f"**Top Role:** {member.top_role}\n"
+        f"**Bot:** {member.bot}"
+    )
+    await ctx.send(info)
+
+@chroma.command()
+async def avatar(ctx, member: discord.Member = None):
+    member = member or ctx.author
+    await ctx.send(f"{member}'s avatar URL:\n{member.avatar.url}")
 
 @nazareth.command()
 async def hypesquad(ctx, house: str):
