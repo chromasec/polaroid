@@ -39,6 +39,9 @@ help2 = f"""
 [1;37m{prefix}[1;34mpurge/clear/clean [number (not required)]
 [1;37m{prefix}[1;34mdmscrape/dmsave/ds
 [1;37m{prefix}[1;34mmemscrape
+[1;37m{prefix}[1;34serverinfo
+[1;37m{prefix}[1;34userinfo [mention]
+[1;37m{prefix}[1;34avatar [mention]
 ```"""
 help3 = f"""
 ```ansi
@@ -187,6 +190,47 @@ async def func(ctx, time: int = None):
 async def raidc(ctx, time: int = None):
     if time: await ctx.send(help4, delete_after=time)
     else: await ctx.send(help4)
+
+@chroma.command()
+async def serverinfo(ctx):
+    guild = ctx.guild
+    text_channels = len(guild.text_channels)
+    voice_channels = len(guild.voice_channels)
+    members = guild.member_count
+    owner = guild.owner
+    created = guild.created_at.strftime("%Y-%m-%d %H:%M:%S")
+
+    info = (
+        f"**Server Name:** {guild.name}\n"
+        f"**Server ID:** {guild.id}\n"
+        f"**Owner:** {owner}\n"
+        f"**Members:** {members}\n"
+        f"**Text Channels:** {text_channels}\n"
+        f"**Voice Channels:** {voice_channels}\n"
+        f"**Created On:** {created}"
+    )
+    await ctx.send(info)
+@chroma.command()
+async def userinfo(ctx, member: discord.Member = None):
+    member = member or ctx.author
+    joined = member.joined_at.strftime("%Y-%m-%d %H:%M:%S") if member.joined_at else "Unknown"
+    created = member.created_at.strftime("%Y-%m-%d %H:%M:%S")
+
+    info = (
+        f"**User:** {member} (ID: {member.id})\n"
+        f"**Display Name:** {member.display_name}\n"
+        f"**Account Created:** {created}\n"
+        f"**Joined Server:** {joined}\n"
+        f"**Top Role:** {member.top_role}\n"
+        f"**Bot:** {member.bot}"
+    )
+    await ctx.send(info)
+
+@chroma.command()
+async def avatar(ctx, member: discord.Member = None):
+    member = member or ctx.author
+    await ctx.send(f"{member}'s avatar URL:\n{member.avatar.url}")
+
 
 ## NUKE SOON ##
 
