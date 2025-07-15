@@ -22,16 +22,22 @@ prefix = ";"
 polaroid = commands.Bot(command_prefix=prefix, intents=discord.Intents.all(), self_bot=1); chroma = polaroid; nazareth = chroma
 
 @polaroid.event
+async def on_ready():
+    print(colored)
+    print(f"(+) Username - {C.LIGHTBLACK_EX}{polaroid.user.name}{C.RESET} [{C.LIGHTBLACK_EX}{polaroid.user.id}{C.RESET}]")
+    print(f"{C.LIGHTBLACK_EX}chromasec{C.RESET} or {C.LIGHTBLACK_EX}yugokash{C.RESET} on discord for support")
+
+@polaroid.event
 async def on_message(message):
     if message.content.startswith(prefix):
         await message.delete()
 
-@polaroid.command(name="quickpurge")
+@chroma.command(name="quickpurge")
 async def quickpurge(ctx, amount: int, delay: float):
     if ctx.author == polaroid.user:
         await ctx.channel.purge(limit=amount, check=lambda m: m.author == polaroid.user, bulk=True, delay=delay)
 
-@polaroid.command(name="advancedpurge")
+@chroma.command(name="advancedpurge")
 async def advancedpurge(ctx, amount: int, delay: float):
     if ctx.author == polaroid.user:
         messages = await ctx.channel.history(limit=amount).flatten()
@@ -39,5 +45,21 @@ async def advancedpurge(ctx, amount: int, delay: float):
         for message in user_messages:
             await message.delete()
             await asyncio.sleep(delay)
+
+@nazareth.command(aliases=["dmsave", "ds"])
+async def dmscrape(ctx):
+    async for message in ctx.channel.history(limit=None, oldest_first=True): 
+        print(f"[{C.LIGHTBLACK_EX}{message.author.name}{C.RESET}] {C.LIGHTBLACK_EX}{message.content}{C.RESET}"); 
+        if message.attachments:
+            print(Center.XCenter(f"[{C.LIGHTBLACK_EX}{message.author.name}{C.RESET}] {C.LIGHTBLACK_EX}{message.attachments[0].url}{C.RESET}"))
+
+@nazareth.command(aliases=["mscrape", "ms"])
+async def memscrape(ctx):
+    users = set()
+    async for message in ctx.channel.history(limit=1000):
+        users.add(message.author.id)
+    users = list(users)
+    for user in users:
+        print(Center.XCenter(user))
 
 polaroid.run(token, bot=0)
