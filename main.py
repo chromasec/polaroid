@@ -1,13 +1,18 @@
 # -*- coding: utf-8 -*-
+
+"""
+come with me alice, let me show you how deep the rabbit hole goes.
+"""
+
 import discord; from discord.ext import commands; import random; from itertools import cycle; from colorama import Fore as C; import os
 import asyncio; import httpx; from tasksio import TaskPool; import string; import nest_asyncio; from pystyle import Colorate, Colors, Center
 nest_asyncio.apply()
 
 ascii = Center.XCenter(r"""              ______                   ______________
 _________________  /_____ ________________(_)_____  /
-___  __ \  __ \_  /_  __ `/_  ___/  __ \_  /_  __  / 
-__  /_/ / /_/ /  / / /_/ /_  /   / /_/ /  / / /_/ /  
-_  .___/\____//_/  \__,_/ /_/    \____//_/  \__,_/   
+___  __ \  __ \_  /_  __ `/_  ___/  __ \_  /_  __  /
+__  /_/ / /_/ /  / / /_/ /_  /   / /_/ /  / / /_/ /
+_  .___/\____//_/  \__,_/ /_/    \____//_/  \__,_/
 /_/                                                  """); colored = Colorate.Vertical(Colors.white_to_black, ascii)
 
 print(colored)
@@ -26,6 +31,20 @@ async def on_ready():
 async def on_message(message):
     if message.content.startswith(prefix):
         await message.delete()
+
+@chroma.command(name="quickpurge")
+async def quickpurge(ctx, amount: int, delay: float):
+    if ctx.author == polaroid.user:
+        await ctx.channel.purge(limit=amount, check=lambda m: m.author == polaroid.user, bulk=True, delay=delay)
+
+@chroma.command(name="advancedpurge")
+async def advancedpurge(ctx, amount: int, delay: float):
+    if ctx.author == polaroid.user:
+        messages = await ctx.channel.history(limit=amount).flatten()
+        user_messages = [m for m in messages if m.author == polaroid.user]
+        for message in user_messages:
+            await message.delete()
+            await asyncio.sleep(delay)
 
 @nazareth.command(aliases=["dmsave", "ds"])
 async def dmscrape(ctx):
