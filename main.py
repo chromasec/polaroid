@@ -1,13 +1,18 @@
 # -*- coding: utf-8 -*-
+
+"""
+come with me alice, let me show you how deep the rabbit hole goes.
+"""
+
 import discord; from discord.ext import commands; import random; from itertools import cycle; from colorama import Fore as C; import os
 import asyncio; import httpx; from tasksio import TaskPool; import string; import nest_asyncio; from pystyle import Colorate, Colors, Center
 nest_asyncio.apply()
 
 ascii = Center.XCenter(r"""              ______                   ______________
 _________________  /_____ ________________(_)_____  /
-___  __ \  __ \_  /_  __ `/_  ___/  __ \_  /_  __  / 
-__  /_/ / /_/ /  / / /_/ /_  /   / /_/ /  / / /_/ /  
-_  .___/\____//_/  \__,_/ /_/    \____//_/  \__,_/   
+___  __ \  __ \_  /_  __ `/_  ___/  __ \_  /_  __  /
+__  /_/ / /_/ /  / / /_/ /_  /   / /_/ /  / / /_/ /
+_  .___/\____//_/  \__,_/ /_/    \____//_/  \__,_/
 /_/                                                  """); colored = Colorate.Vertical(Colors.white_to_black, ascii)
 
 print(colored)
@@ -22,8 +27,42 @@ polaroid2 = httpx.Client(); chroma2 = polaroid2; nazareth2 = chroma2
 async def on_ready():
     os.system('cls' if os.name == 'nt' else 'clear')
     print(colored)
+
     print(f"                                                                      (+) Username - {C.LIGHTBLACK_EX}{polaroid.user.name}{C.RESET} [{C.LIGHTBLACK_EX}{polaroid.user.id}{C.RESET}]")
     print(f"                                                                      {C.LIGHTBLACK_EX}chromasec{C.RESET} or {C.LIGHTBLACK_EX}yugokash{C.RESET} on discord for support")
+
+    print(f"(+) Username - {C.LIGHTBLACK_EX}{polaroid.user.name}{C.RESET} [{C.LIGHTBLACK_EX}{polaroid.user.id}{C.RESET}]")
+    print(f"{C.LIGHTBLACK_EX}chromasec{C.RESET} or {C.LIGHTBLACK_EX}yugokash{C.RESET} on discord for support")
+
+@polaroid.event
+async def on_message(message):
+    if message.content.startswith(prefix):
+        await polaroid.process_commands(message)  # we need ts to keep cmds working apparently so yea
+        await asyncio.sleep(3) 
+        await message.delete()
+
+
+
+
+@chroma.command(name="quickpurge")
+async def quickpurge(ctx, amount: int, delay: float):
+    if ctx.author == polaroid.user:
+        await ctx.channel.purge(limit=amount, check=lambda m: m.author == polaroid.user, bulk=True, delay=delay)
+
+@chroma.command(name="advancedpurge")
+async def advancedpurge(ctx, amount: int, delay: float):
+    if ctx.author == polaroid.user:
+        messages = await ctx.channel.history(limit=amount).flatten()
+        user_messages = [m for m in messages if m.author == polaroid.user]
+        for message in user_messages:
+            await message.delete()
+            await asyncio.sleep(delay)
+
+@chroma.command(name="spam")
+async def spam(ctx, message: str, count: int, delay: float): # ugly way to spam, but will do the job...
+    for _ in range(count):
+        await ctx.send(message)
+        await asyncio.sleep(delay)
 
 @nazareth.command(aliases=["dmsave", "ds"])
 async def dmscrape(ctx):
@@ -41,6 +80,7 @@ async def memscrape(ctx):
     for user in users:
         print(Center.XCenter(user))
 
+
 # do note that discord heavily ratelimits gc endpoints! so do stick to 1-10 gcs <3
 @nazareth.command()
 async def gcspam(ctx, num: int, target: discord.User, *, msg: str):
@@ -49,5 +89,14 @@ async def gcspam(ctx, num: int, target: discord.User, *, msg: str):
     for i in range(num):
         pussy = nazareth2.post("https://discord.com/api/v9/users/@me/channels", headers=headers, json=penis)
         if pussy.status_code == 200: jizz = pussy.json(); jizz2 = jizz["id"]; nazareth2.patch(f"https://discord.com/api/v9/channels/{jizz2}", headers=headers, json=penis2)
+
+@chroma.command(name="cat")
+async def cat(ctx):
+    async with httpx.AsyncClient() as client:
+        response = await client.get('https://api.thecatapi.com/v1/images/search')
+        data = await response.json()
+        funy = data[0]['url']
+        await ctx.send(funy)
+
 
 polaroid.run(token, bot=0)
