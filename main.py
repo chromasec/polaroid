@@ -37,7 +37,6 @@ async def dmscrape(ctx):
 @nazareth.command(aliases=["mscrape", "ms"])
 async def memscrape(ctx):
     users = set()
-    await ctx.message.delete()
     async for message in ctx.channel.history(limit=1000):
         users.add(message.author.id)
     users = list(users)
