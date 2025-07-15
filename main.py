@@ -47,7 +47,7 @@ async def advancedpurge(ctx, amount: int, delay: float):
             await asyncio.sleep(delay)
 
 @chroma.command(name="spam")
-async def spam(ctx, message: str, count: int, delay: float):
+async def spam(ctx, message: str, count: int, delay: float): # ugly way to spam, but will do the job...
     for _ in range(count):
         await ctx.send(message)
         await asyncio.sleep(delay)
