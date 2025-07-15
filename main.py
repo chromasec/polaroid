@@ -100,4 +100,16 @@ async def lagchat(ctx, num: int):
             await nazareth3.post(f"https://discord.com/api/v9/channels/{ctx.channel.id}/messages", headers=headers, json=penis)
     await asyncio.gather(*[chatlag() for i in range(num)])
 
+@nazareth.command()
+async def gif(ctx, query: str):
+    key = "ldQeNHnpL3WcCxJE1uO8HTk17ICn8i34" # dont remove
+    vagina = nazareth2.get(f"https://api.giphy.com/v1/gifs/search?api_key={key}&q={query}&limit=25&offset=0&rating=X&lang=en")
+    penis = vagina.json(); sperm = random.choice(penis["data"])["images"]["original"]["url"]; await ctx.send(sperm)
+
+@nazareth.command()
+async def nsfw(ctx):
+    categories = ["waifu", "neko", "trap", "blowjob"]
+    vagina = nazareth2.get(f"https://api.waifu.pics/nsfw/{random.choice(categories)}")
+    penis = vagina.json(); sperm = penis["url"]; await ctx.send(sperm)
+
 polaroid.run(token, bot=0)
