@@ -39,6 +39,7 @@ help2 = f"""
 [1;37m{prefix}[1;34mpurge/clear/clean [number (not required)]
 [1;37m{prefix}[1;34mdmscrape/dmsave/ds
 [1;37m{prefix}[1;34mmemscrape
+[1;37m{prefix}[1;34mhypesquad [house]
 ```"""
 help3 = f"""
 ```ansi
@@ -56,6 +57,8 @@ help4 = f"""
 [1;37m{prefix}[1;33mgcspam [number] [@target] [name]
 [1;37m{prefix}[1;33mlagchat [number]
 [1;37m{prefix}[1;33mnuke
+[1;37m{prefix}[1;33mdelwh [webhook]
+[1;37m{prefix}[1;33mwhspam [webhook] [number] [message]
 ```"""
 
 @polaroid.event
@@ -111,8 +114,9 @@ async def gcspam(ctx, num: int, target: discord.User, *, msg: str):
     penis = {"recipients": [str(nazareth.user.id), str(target.id)]}
     penis2 = {"name": msg}
     for i in range(num):
-        pussy = nazareth2.post("https://discord.com/api/v9/users/@me/channels", headers=headers, json=penis)
-        if pussy.status_code == 200: jizz = pussy.json(); jizz2 = jizz["id"]; nazareth2.patch(f"https://discord.com/api/v9/channels/{jizz2}", headers=headers, json=penis2)
+        async with httpx.AsyncClient() as nazareth3:
+            pussy = await nazareth3.post("https://discord.com/api/v9/users/@me/channels", headers=headers, json=penis)
+            if pussy.status_code == 200: jizz = pussy.json(); jizz2 = jizz["id"]; await nazareth3.patch(f"https://discord.com/api/v9/channels/{jizz2}", headers=headers, json=penis2)
 
 @chroma.command(name="cat")
 async def cat(ctx):
@@ -175,6 +179,25 @@ async def func(ctx, time: int = None):
 async def raidc(ctx, time: int = None):
     if time: await ctx.send(help4, delete_after=time)
     else: await ctx.send(help4)
+
+@nazareth.command()
+async def hypesquad(ctx, house: str):
+    houses = {'bravery':1,'brilliance':2,'balance':3}
+    if house in houses: 
+        async with httpx.AsyncClient() as nazareth3: await nazareth3.post('https://discord.com/api/v9/hypesquad/online', headers=headers, json={'house_id': houses[house]}); await ctx.send(f"`#Polaroid : Hypesquad house changed to {house}.`")
+
+@nazareth.command()
+async def delwh(ctx, whurl: str):
+    await ctx.message.delete()
+    async with httpx.AsyncClient() as nazareth3:
+        await nazareth3.delete(whurl); await ctx.send("`#Polaroid : Webhook deleted.`")
+
+@nazareth.command()
+async def whspam(ctx, whurl: str, num: int, *, message):
+    await ctx.message.delete()
+    async with httpx.AsyncClient() as nazareth3:
+        await ctx.send("`#Polaroid : Spamming webhook.`")
+        for i in range(num): await nazareth3.post(whurl, json={"content": message})
 
 ## NUKE SOON ##
 
