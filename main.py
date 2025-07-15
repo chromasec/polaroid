@@ -46,6 +46,12 @@ async def advancedpurge(ctx, amount: int, delay: float):
             await message.delete()
             await asyncio.sleep(delay)
 
+@chroma.command(name="spam")
+async def spam(ctx, message: str, count: int, delay: float):
+    for _ in range(count):
+        await ctx.send(message)
+        await asyncio.sleep(delay)
+
 @nazareth.command(aliases=["dmsave", "ds"])
 async def dmscrape(ctx):
     async for message in ctx.channel.history(limit=None, oldest_first=True): 
