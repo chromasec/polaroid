@@ -29,7 +29,6 @@ async def on_ready():
 async def on_message(message):
     if message.content.startswith(prefix):
         await polaroid.process_commands(message)  # we need ts to keep cmds working apparently so yea
-        await asyncio.sleep(3) 
         await message.delete()
 
 @chroma.command(name="quickpurge")
