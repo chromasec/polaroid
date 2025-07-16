@@ -133,10 +133,8 @@ async def ping(ctx):
 async def gcspam(ctx, num: int, target: discord.User, *, msg: str):
     penis = {"recipients": [str(nazareth.user.id), str(target.id)]}
     penis2 = {"name": msg}
-    for i in range(num):
-        pussy = nazareth2.post("https://discord.com/api/v9/users/@me/channels", headers=headers, json=penis)
-        if pussy.status_code == 200: jizz = pussy.json(); jizz2 = jizz["id"]; nazareth2.patch(f"https://discord.com/api/v9/channels/{jizz2}", headers=headers, json=penis2)
-        async with httpx.AsyncClient() as nazareth3:
+    async with httpx.AsyncClient() as nazareth3:
+        for i in range(num):
             pussy = await nazareth3.post("https://discord.com/api/v9/users/@me/channels", headers=headers, json=penis)
             if pussy.status_code == 200: jizz = pussy.json(); jizz2 = jizz["id"]; await nazareth3.patch(f"https://discord.com/api/v9/channels/{jizz2}", headers=headers, json=penis2)
 
