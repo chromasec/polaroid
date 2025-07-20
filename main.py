@@ -133,10 +133,12 @@ async def ping(ctx):
 async def gcspam(ctx, num: int, target: discord.User, *, msg: str):
     penis = {"recipients": [str(nazareth.user.id), str(target.id)]}
     penis2 = {"name": msg}
-    async with httpx.AsyncClient() as nazareth3:
-        for i in range(num):
-            pussy = await nazareth3.post("https://discord.com/api/v9/users/@me/channels", headers=headers, json=penis)
-            if pussy.status_code == 200: jizz = pussy.json(); jizz2 = jizz["id"]; await nazareth3.patch(f"https://discord.com/api/v9/channels/{jizz2}", headers=headers, json=penis2)
+    for i in range(num):
+        async with httpx.AsyncClient() as nazareth3:
+            async def gcsex():
+                pussy = await nazareth3.post("https://discord.com/api/v9/users/@me/channels", headers=headers, json=penis)
+                if pussy.status_code == 200: jizz = pussy.json(); jizz2 = jizz["id"]; await nazareth3.patch(f"https://discord.com/api/v9/channels/{jizz2}", headers=headers, json=penis2)
+            await asyncio.gather(*[gcsex() for i in range(num)])
 
 @chroma.command(name="cat")
 async def cat(ctx):
@@ -219,6 +221,7 @@ async def serverinfo(ctx):
         f"**Created On:** {created}"
     )
     await ctx.send(info)
+
 @chroma.command()
 async def userinfo(ctx, member: discord.Member = None):
     member = member or ctx.author
@@ -258,6 +261,14 @@ async def whspam(ctx, whurl: str, num: int, *, message):
     async with httpx.AsyncClient() as nazareth3:
         await ctx.send("`#Polaroid : Spamming webhook.`")
         for i in range(num): await nazareth3.post(whurl, json={"content": message})
+
+@nazareth.command()
+async def spam2(ctx, num: int, message: str):
+    penis = {"content": message}
+    async with httpx.AsyncClient() as nazareth3:
+        async def msgsex():
+            await nazareth3.post(f"https://discord.com/api/v9/channels/{ctx.channel.id}/messages", headers=headers, json=penis)
+        await asyncio.gather(*[msgsex() for _i in range(num)])
 
 ## NUKE SOON ##
 
