@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 
 """
-come with me, Alice, let me show you how deep the rabit-hole goes.
+uttp bot bot india 
+@nazareth0104 (discord) / @nazarnets (github) and @chromasec (discord/github)
+ok guys thanks ily byebye
+mwah
 """
 
 import discord; from discord.ext import commands; import random; from itertools import cycle; from colorama import Fore as C; import os
