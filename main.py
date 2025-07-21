@@ -119,7 +119,7 @@ async def memscrape(ctx):
         users.add(message.author.id)
     users = list(users)
     for user in users:
-        print(Center.XCenter(user))
+        print(user)
 
 @chroma.command()
 async def ping(ctx):
@@ -174,13 +174,14 @@ async def _8ball(ctx, question: str):
     "Yes, definitely.","Without a doubt.", "Absolutely.",
     "Signs point to yes.", "Most likely.", "Ask again later.",
     "Cannot predict now.", "Better not tell you now.", "Don't count on it.",
-    "My sources say no.", "Very doubtful.", "Absolutely not."]; await ctx.reply(random.choice(responses))
+    "My sources say no.", "Very doubtful.", "Absolutely not."]; await ctx.send(random.choice(responses))
 
 @nazareth.command()
-async def roulette(ctx, chamber: int):
+async def roulette(ctx):
+    chamber = random.randint(1, 6)
     bullet = random.randint(1, 6)
-    if chamber == bullet: await ctx.reply("*You pull the trigger, everything goes black. You died.*")
-    else: await ctx.reply("*You pull the trigger, nothing happens. You survived.*")
+    if chamber == bullet: await ctx.send("*You pull the trigger, everything goes black. You died.*")
+    else: await ctx.send("*You pull the trigger, nothing happens. You survived.*")
 
 @nazareth.command()
 async def help(ctx, time: int = None):
